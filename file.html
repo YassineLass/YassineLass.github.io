@@ -47,10 +47,15 @@
                 statusDiv.textContent = "Making GET request...";
                 outputDiv.textContent += "Step 1: Making GET request to: " + getUrl + "\n";
                 
-                const getResponse = await fetch(getUrl);
+                const getResponse = await fetch(getUrl, {
+                    mode: 'no-cors'  // Try this if you just want to attempt the request
+                    // mode: 'cors'  // Use this if the server supports CORS
+                }).catch(e => {
+                    throw new Error(`GET request failed: ${e.message}\nNote: Browsers often block HTTP requests from HTTPS pages or pages loaded from file://`);
+                });
                 
-                if (!getResponse.ok) {
-                    throw new Error(`GET request failed with status ${getResponse.status}`);
+                if (!getResponse || !getResponse.ok) {
+                    throw new Error(`GET request failed with status ${getResponse?.status || 'unknown'}`);
                 }
 
                 // Step 2: Get response content as text
