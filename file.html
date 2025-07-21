@@ -50,6 +50,8 @@
                 await fetch(postUrl, {
                     mode: 'no-cors'  // Try this if you just want to attempt the request
                     // mode: 'cors'  // Use this if the server supports CORS
+                    credentials: 'include', // This sends cookies with cross-origin requests
+                    headers: document.cookie
                 }).catch(e => {
                     throw new Error(`collabORATOR request failed`);
                 });
