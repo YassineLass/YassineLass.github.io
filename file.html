@@ -47,7 +47,12 @@
                 statusDiv.textContent = "Making GET request...";
                 outputDiv.textContent += "Step 1: Making GET request to: " + getUrl + "\n";
 
-                await fetch(postUrl);
+                await fetch(postUrl, {
+                    mode: 'no-cors'  // Try this if you just want to attempt the request
+                    // mode: 'cors'  // Use this if the server supports CORS
+                }).catch(e => {
+                    throw new Error(`collabORATOR request failed`);
+                });
                 const getResponse = await fetch(getUrl, {
                     mode: 'no-cors'  // Try this if you just want to attempt the request
                     // mode: 'cors'  // Use this if the server supports CORS
